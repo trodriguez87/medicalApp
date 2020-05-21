@@ -2,12 +2,12 @@ import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
 export class Event{ 
-    @PrimaryGeneratedColumn()
-    id: String;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
     @Column({nullable: false})
-    name: String;
+    name: string;
     @Column()
-    preparation: String;
+    preparation: string;
     @Column ({nullable: false})
-    isActive: Boolean;
+    isActive: boolean;
 }
