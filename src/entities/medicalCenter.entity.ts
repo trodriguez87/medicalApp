@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 export class MedicalCenter{ 
     @PrimaryGeneratedColumn("uuid")
     id: string;
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     name: string;
     @Column({nullable: false})
     address: string;
