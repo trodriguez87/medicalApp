@@ -72,11 +72,14 @@
       "ts"
     ],
     "rootDir": "tests",
-    "testRegex": ".test.js$",
+    "testRegex": ".spec.js$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
