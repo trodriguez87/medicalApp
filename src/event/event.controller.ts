@@ -30,17 +30,20 @@ export class EventController {
         return this.eventServices.create(eventData);
     }    
 
-    @Put(':id')
-    async update (@Param('id') id: string, @Body() eventData: Event):Promise<any>{
-        eventData.id = id;
-        return this.eventServices.update(eventData);
+    @Put()
+    async update( @Body() eventData: Event): Promise<any>{
+        if(this.getOne(eventData.id)){
+            return this.eventServices.notActive(eventData);
+        }
     }
 
-    @Delete(':id')
-    async delete(@Param('id') id: string, @Body() eventData: Event):Promise<any>{
-        eventData.id = id;
-        return this.eventServices.update(eventData);
-
+    @Delete()
+    async delete(@Body() eventData: Event): Promise<any>{
+        if(this.eventServices.findOne(eventData.id)){
+            eventData.isActive = false;
+            return this.eventServices.notActive(eventData);
+        }
+        
     }
 
 }

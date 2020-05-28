@@ -23,16 +23,20 @@ export class DiagnoseController {
         return this.diagnoseServices.create(diagnosesData);
     }
 
-    @Put(':id')
-    async update(@Param('id') id:string, @Body() diagnoseData: Diagnose): Promise<any>{
-        diagnoseData.id = id;
-        return this.diagnoseServices.update(diagnoseData);
+    @Put()
+    async update( @Body() diagnoseData: Diagnose): Promise<any>{
+        if(this.getOne(diagnoseData.id)){
+            return this.diagnoseServices.notActive(diagnoseData);
+        }
     }
 
-    @Delete(':id')
-    async delete(@Param('id') id:string, @Body() diagnoseData: Diagnose): Promise<any>{
-        diagnoseData.id = id;
-        return this.diagnoseServices.update(diagnoseData);
+    @Delete()
+    async delete(@Body() diagnoseData: Diagnose): Promise<any>{
+        if(this.diagnoseServices.findOne(diagnoseData.id)){
+            diagnoseData.isActive = false;
+            return this.diagnoseServices.notActive(diagnoseData);
+        }
+        
     }
 }
 

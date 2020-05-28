@@ -8,11 +8,10 @@ export class DiagnoseService {
 
     constructor(@InjectRepository (Diagnose)
         private diagnoseRepository: Repository<Diagnose>){
-
     }
 
     async findAll(): Promise<Diagnose[]>{
-        return await this.diagnoseRepository.find();
+        return await this.diagnoseRepository.find({where: {isActive: true}});
     }
 
     async findOne(idDiagnose: string): Promise<Diagnose>{
@@ -23,11 +22,11 @@ export class DiagnoseService {
         return await this.diagnoseRepository.save(diagnose);
     }
 
-    async update(diagnose: Diagnose): Promise<UpdateResult>{
-        return await this.diagnoseRepository.update(diagnose.id, diagnose);
+    async update(diagnose: Diagnose): Promise<Diagnose>{
+        return await this.diagnoseRepository.save(diagnose);
     }
 
-    async notActive (diagnose: Diagnose): Promise<UpdateResult>{
-        return await this.diagnoseRepository.update(diagnose.id, diagnose);
+    async notActive (diagnose: Diagnose): Promise<Diagnose>{
+        return await this.diagnoseRepository.save(diagnose);
     }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
-import { TypeOrmCrudService } from '@nestjsx/crud-typeorm'
 import { Event } from '../entities/event.entity';
 import { Repository, UpdateResult, DeleteResult } from 'typeorm';
 
@@ -13,7 +12,7 @@ export class EventService {
     }
 
     async findAll(): Promise<Event[]>{
-        return await this.eventRepository.find();
+        return await this.eventRepository.find({where: {isActive: true}});
     }
 
     async findOne(idEvent: string): Promise<Event>{
@@ -28,12 +27,12 @@ export class EventService {
         return await this.eventRepository.save(event);
     }
 
-    async update(event: Event): Promise<UpdateResult>{
-        return await this.eventRepository.update(event.id, event);
+    async update(event: Event): Promise<Event>{
+        return await this.eventRepository.save(event);
     }
 
-    async delete (event: Event): Promise<UpdateResult>{
-        return await this.eventRepository.update(event.id, event);
+    async notActive (event: Event): Promise<Event>{
+        return await this.eventRepository.save(event);
     }
 
 

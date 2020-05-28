@@ -23,4 +23,20 @@ export class MedicalCenterController {
         return this.medicalServices.create(medicalData);
     }
 
+    @Put()
+    async update( @Body() medicalData: MedicalCenter): Promise<any>{
+        if(this.getOne(medicalData.id)){
+            return this.medicalServices.notActive(medicalData);
+        }
+    }
+
+    @Delete()
+    async delete(@Body() medicalData: MedicalCenter): Promise<any>{
+        if(this.medicalServices.findOne(medicalData.id)){
+            medicalData.isActive = false;
+            return this.medicalServices.notActive(medicalData);
+        }
+        
+    }
+
 }
