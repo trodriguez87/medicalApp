@@ -10,4 +10,6 @@ export class MedicalCenter{
     address: string;
     @Column ({nullable: false})
     phone: string;
+    @Column ({nullable: false})
+    isActive: boolean;
 }
