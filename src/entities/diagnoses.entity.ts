@@ -8,7 +8,7 @@ export class Diagnose{
     abbreviation: string;
     @Column({nullable:false})
     name: string;
-    @Column()
+    @Column({nullable:true})
     description: string;
     @Column ({nullable: false})
     isActive: boolean;

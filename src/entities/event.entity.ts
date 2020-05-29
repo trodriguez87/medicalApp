@@ -6,7 +6,7 @@ export class Event{
     id: string;
     @Column({nullable: false})
     name: string;
-    @Column()
+    @Column({nullable: true})
     preparation: string;
     @Column ({nullable: false})
     isActive: boolean;

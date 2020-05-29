@@ -2,7 +2,7 @@
   "name": "medical-app",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "TARQ",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -73,7 +73,7 @@
       "ts"
     ],
     "rootDir": "tests",
-    "testRegex": ".spec.js$",
+    "testRegex": [".spec.js$",".test.ts$"],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
