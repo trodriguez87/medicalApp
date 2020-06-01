@@ -50,7 +50,7 @@ describe("Event Center Controller", () => {
 
     /*it('Update', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
-        test = {...event, address: "NuevaDir"};
+        test = {...this.event, name: 'nuevaDir'};
         jest.spyOn(repository,'save').mockResolvedValueOnce(event);
         return expect(controller.update(event)).resolves.toBe(event);
     });*/

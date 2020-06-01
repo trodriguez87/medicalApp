@@ -6,10 +6,10 @@ export class TypeDocument{
     @PrimaryGeneratedColumn("uuid")
     id: string;
     
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     abbreviation: string;
    
-    @Column({nullable:false})
+    @Column({nullable:false, unique: true})
     name: string;
     
     @Column ({nullable: false})
