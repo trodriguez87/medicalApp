@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {MedicalCenterController} from '../../../src/medical-center/medical-center.controller';
 import {MedicalCenterService} from '../../../src/medical-center/medical-center.service';
 import {MedicalCenter} from '../../../src/entities/medicalCenter.entity';
+import {Event} from '../../../src/entities/event.entity';
 import {Repository} from 'typeorm';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {ConflictException, NotFoundException} from '@nestjs/common';
@@ -11,11 +12,20 @@ describe("Medical Center Controller", () => {
     let controller: MedicalCenterController;
     let repository: Repository<MedicalCenter>;
 
+
+    const event: Event={
+        "id": "123",
+        "name": "PruebaEntidadMedica",
+        "preparation": "Preparacion Prueba",
+        "isActive": true
+    };
+
     const medical: MedicalCenter={
         "id": "123",
         "name": "PruebaEntidadMedica",
         "address": "Fundación",
         "phone": "2148863",
+        "events": [event],
         "isActive": true
     };
 
@@ -63,12 +73,12 @@ describe("Medical Center Controller", () => {
         return expect(controller.getAll()).resolves.toBe(result);
     });
 
-    /*it('Update', async() =>{
+    it('Update', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
-        test = {...medical, address: "NuevaDir"};
+        test = {...this.medical, address: 'nuevaDir'};
         jest.spyOn(repository,'save').mockResolvedValueOnce(medical);
         return expect(controller.update(medical)).resolves.toBe(medical);
-    });*/
+    });
 
     it('isNotActive', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);

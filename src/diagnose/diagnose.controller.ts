@@ -26,7 +26,7 @@ export class DiagnoseController {
     @Put()
     async update( @Body() diagnoseData: Diagnose): Promise<any>{
         if(this.getOne(diagnoseData.id)){
-            return this.diagnoseServices.notActive(diagnoseData);
+            return this.diagnoseServices.update(diagnoseData);
         }
     }
 

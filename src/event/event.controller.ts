@@ -33,7 +33,7 @@ export class EventController {
     @Put()
     async update( @Body() eventData: Event): Promise<any>{
         if(this.getOne(eventData.id)){
-            return this.eventServices.notActive(eventData);
+            return this.eventServices.update(eventData);
         }
     }
 

@@ -5,7 +5,10 @@
   "username": "postgres",
   "password": "123",
   "database": "postgres",
+  "dropSchema": false,
   "entities": ["dist/**/*.entity.js"],
   "synchronize": true,
-  "logging": true
+  "logging": true,
+  "migrations": ["migrations/**/*.ts"],
+  "subscribers": ["subscriber/**/*.ts", "dist/subscriber/**/.js"]
 }

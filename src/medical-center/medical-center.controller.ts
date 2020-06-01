@@ -26,7 +26,7 @@ export class MedicalCenterController {
     @Put()
     async update( @Body() medicalData: MedicalCenter): Promise<any>{
         if(this.getOne(medicalData.id)){
-            return this.medicalServices.notActive(medicalData);
+            return this.medicalServices.update(medicalData);
         }
     }
 

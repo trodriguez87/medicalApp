@@ -73,7 +73,10 @@
       "ts"
     ],
     "rootDir": "tests",
-    "testRegex": [".spec.js$",".test.ts$"],
+    "testRegex": [
+      ".spec.js$",
+      ".test.ts$"
+    ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
