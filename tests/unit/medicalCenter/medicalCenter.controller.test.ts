@@ -13,19 +13,11 @@ describe("Medical Center Controller", () => {
     let repository: Repository<MedicalCenter>;
 
 
-    const event: Event={
-        "id": "123",
-        "name": "PruebaEntidadMedica",
-        "preparation": "Preparacion Prueba",
-        "isActive": true
-    };
-
     const medical: MedicalCenter={
         "id": "123",
         "name": "PruebaEntidadMedica",
         "address": "Fundación",
         "phone": "2148863",
-        "events": [event],
         "isActive": true
     };
 

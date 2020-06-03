@@ -5,17 +5,27 @@ import {Event} from '../../../src/entities/event.entity';
 import {Repository} from 'typeorm';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {ConflictException, NotFoundException} from '@nestjs/common';
+import { MedicalCenter } from 'src/entities/medicalCenter.entity';
 
 
 describe("Event Center Controller", () => {
     let controller: EventController;
     let repository: Repository<Event>;
 
+    const medical: MedicalCenter={
+        "id": "123",
+        "name": "PruebaEntidadMedica",
+        "address": "Fundación",
+        "phone": "2148863",
+        "isActive": true
+    };
+
     const event: Event={
         "id": "123",
         "name": "PruebaEntidadMedica",
         "preparation": "Preparacion Prueba",
-        "isActive": true
+        "isActive": true,
+        "medicalCenter": medical
     };
 
     beforeAll(async()=>{

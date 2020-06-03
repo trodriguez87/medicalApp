@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from 'typeorm';
+import { MedicalCenter } from './medicalCenter.entity';
 
 @Entity()
 export class Event{ 
@@ -13,4 +14,8 @@ export class Event{
     
     @Column ({nullable: false})
     isActive: boolean;
+
+    @OneToOne(type => MedicalCenter)
+    @JoinColumn()
+    medicalCenter: MedicalCenter;
 }

@@ -1,8 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable} from 'typeorm';
-import { Event } from './event.entity';
+import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
-import { from } from 'rxjs';
-import { type } from 'os';
 
 @Entity()
 export class MedicalCenter{ 
@@ -21,8 +18,4 @@ export class MedicalCenter{
     
     @Column ({nullable: false})
     isActive: boolean;
-    
-    @ManyToMany(type => Event)
-    @JoinTable()
-    events: Event[];
 }
