@@ -1,3 +1,21 @@
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
+  
+
+*/
 import { Controller, Body, Param, Get, Delete,Post, Put, HttpException } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud'
 import { EventService } from './event.service'
@@ -7,8 +25,7 @@ import { get } from 'http';
 
 @Controller('event')
 export class EventController {
-    constructor (private readonly eventServices: EventService){
-    }
+    constructor (private readonly eventServices: EventService){}
     
     @Get()
     async getAll():Promise<Event[]> {
@@ -20,28 +37,32 @@ export class EventController {
         return this.eventServices.findOne(idEvent);
     }
 
-    /*@Get(':isActive')
-    async getActive(@Param('isActive') isActive:string): Promise<Event[]>{
-        return this.eventServices.findActive(isActive);
-    }*/
-
     @Post()
-    async create(@Body() eventData: Event): Promise<any>{           
-
-        return this.eventServices.create(eventData);
+    async create(@Body() eventData: Event): Promise<Event>{           
+        async function checkParameterExistence(value: any) {
+            if(value === null || !value || value === undefined) {
+                throw new HttpException({
+                    statusCode: 400,
+                    error: 'Incorrect parameter(s).',
+                    message: this.parameterExistenceError
+                }, 400);
+            }
+        }
+        return this.eventServices.save(eventData);
     }    
 
     @Put(':id')
-    async update (@Param('id') id: string, @Body() eventData: Event):Promise<any>{
+    async update (@Param('id') id: string, @Body() eventData: Event):Promise<Event>{
+        const event: Event = await this.eventServices.findOne(id);
         eventData.id = id;
-        return this.eventServices.update(eventData);
+        return this.eventServices.save(eventData);
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string, @Body() eventData: Event):Promise<any>{
-        eventData.id = id;
-        return this.eventServices.update(eventData);
-
+    async delete(@Param('id') id: string):Promise<Event>{
+        const event: Event = await this.eventServices.findOne(id);
+        event.isActive = false;
+        return this.eventServices.save(event);
     }
 
 }

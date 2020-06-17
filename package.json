@@ -2,9 +2,9 @@
   "name": "medical-app",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Tania Rodríguez",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GPL/GNU 3.0",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -21,9 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test-dev": "jest",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
-    "migration:generate": "yarn run typeorm migration:generate -n",
-    "migration:create": "yarn run typeorm migration:create -n",
-    "migration:run": "yarn run typeorm migration:run"
+    "migration:generate": "yarn typeorm migration:generate -n",
+    "migration:create": "yarn typeorm migration:create -n",
+    "migration:run": "yarn typeorm migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
@@ -41,7 +41,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5",
     "swagger-ui-express": "^4.1.4",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

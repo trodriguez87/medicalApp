@@ -4,7 +4,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "123",
-  "database": "postgres",
+  "database": "medicalapp",
   "entities": ["dist/**/*.entity.js"],
   "synchronize": true,
   "logging": true
