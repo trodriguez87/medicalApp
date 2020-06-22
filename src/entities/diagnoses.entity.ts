@@ -17,13 +17,14 @@
 
 */
 import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import { Length, IsOptional, IsUUID, IsDefined, IS_BOOLEAN, IsBoolean} from 'class-validator';
+import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
 
 @Entity()
 export class Diagnose{ 
 
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
+    @IsOptional()
     id: string;
 
     @Column({type: 'varchar', length: 30, nullable:false})

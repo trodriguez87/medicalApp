@@ -16,13 +16,17 @@
   
 
 */
-import { Controller,Body, Param, Get, Delete, Post, Put, HttpException}  from '@nestjs/common';
+import { Controller,Body, Param, Get, Delete, Post, Put}  from '@nestjs/common';
+import {utilitiesInterface} from '../utilitiesInterface';
 import { DiagnoseService} from './diagnose.service';
 import { Diagnose} from '../entities/diagnoses.entity';
 
 @Controller('diagnose')
-export class DiagnoseController {
-    constructor(private readonly diagnoseServices:DiagnoseService){}
+export class DiagnoseController extends utilitiesInterface{
+
+    constructor(private readonly diagnoseServices:DiagnoseService){
+        super();
+    }
 
     @Get()
     async getAll(): Promise<Diagnose[]>{
@@ -36,15 +40,9 @@ export class DiagnoseController {
 
     @Post()
     async create (@Body() diagnosesData: Diagnose): Promise<Diagnose>{
-        async function checkParameterExistence(value: any) {
-            if(value === null || !value || value === undefined) {
-                throw new HttpException({
-                    statusCode: 400,
-                    error: 'Incorrect parameter(s).',
-                    message: this.parameterExistenceError
-                }, 400);
-            }
-        }
+        this.checkParameterExistence(diagnosesData.abbreviation);
+        this.checkParameterExistence(diagnosesData.name);
+        this.checkParameterExistence(diagnosesData.isActive);
         return this.diagnoseServices.save(diagnosesData);
     }
 

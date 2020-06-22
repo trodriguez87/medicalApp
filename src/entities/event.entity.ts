@@ -24,6 +24,7 @@ import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator
 export class Event{ 
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
+    @IsOptional()
     id: string;
       
     @Column({type: 'varchar', length: 30, nullable:false})

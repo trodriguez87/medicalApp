@@ -16,16 +16,18 @@
   
 
 */
-import { Controller, Body, Param, Get, Delete,Post, Put, HttpException } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud'
+import { Controller, Body, Param, Get, Delete,Post, Put } from '@nestjs/common';
+import {utilitiesInterface} from '../utilitiesInterface';
 import { EventService } from './event.service'
 import { Event } from '../entities/event.entity'
-import { get } from 'http';
+
 
 
 @Controller('event')
-export class EventController {
-    constructor (private readonly eventServices: EventService){}
+export class EventController extends utilitiesInterface{
+    constructor (private readonly eventServices: EventService){
+        super();
+    }
     
     @Get()
     async getAll():Promise<Event[]> {
@@ -38,16 +40,9 @@ export class EventController {
     }
 
     @Post()
-    async create(@Body() eventData: Event): Promise<Event>{           
-        async function checkParameterExistence(value: any) {
-            if(value === null || !value || value === undefined) {
-                throw new HttpException({
-                    statusCode: 400,
-                    error: 'Incorrect parameter(s).',
-                    message: this.parameterExistenceError
-                }, 400);
-            }
-        }
+    async create(@Body() eventData: Event): Promise<Event>{  
+        this.checkParameterExistence(eventData.name);
+        this.checkParameterExistence(eventData.isActive);         
         return this.eventServices.save(eventData);
     }    
 
