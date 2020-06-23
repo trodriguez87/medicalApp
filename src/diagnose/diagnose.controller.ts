@@ -17,12 +17,12 @@
 
 */
 import { Controller,Body, Param, Get, Delete, Post, Put}  from '@nestjs/common';
-import {utilitiesInterface} from '../utilitiesInterface';
+import { Utilities} from '../Utilities';
 import { DiagnoseService} from './diagnose.service';
 import { Diagnose} from '../entities/diagnoses.entity';
 
 @Controller('diagnose')
-export class DiagnoseController extends utilitiesInterface{
+export class DiagnoseController extends Utilities{
 
     constructor(private readonly diagnoseServices:DiagnoseService){
         super();
@@ -39,17 +39,20 @@ export class DiagnoseController extends utilitiesInterface{
     }
 
     @Post()
-    async create (@Body() diagnosesData: Diagnose): Promise<Diagnose>{
-        this.checkParameterExistence(diagnosesData.abbreviation);
-        this.checkParameterExistence(diagnosesData.name);
-        this.checkParameterExistence(diagnosesData.isActive);
-        return this.diagnoseServices.save(diagnosesData);
+    async create (@Body() diagnoseData: Diagnose): Promise<Diagnose>{
+        Utilities.checkParameterExistence(diagnoseData.abbreviation);
+        Utilities.checkParameterExistence(diagnoseData.name);
+        Utilities.checkParameterExistence(diagnoseData.isActive);
+        return this.diagnoseServices.save(diagnoseData);
     }
 
     @Put(':id')
     async update(@Param('id') id:string, @Body() diagnoseData: Diagnose): Promise<Diagnose>{
         const diagnose: Diagnose = await this.diagnoseServices.findOne(id);
         diagnoseData.id = id;
+        Utilities.checkParameterExistence(diagnoseData.abbreviation);
+        Utilities.checkParameterExistence(diagnoseData.name);
+        Utilities.checkParameterExistence(diagnoseData.isActive);
         return this.diagnoseServices.save(diagnoseData);
         
     }

@@ -17,14 +17,14 @@
 
 */
 import { Controller, Body, Param, Get, Delete,Post, Put } from '@nestjs/common';
-import {utilitiesInterface} from '../utilitiesInterface';
+import { Utilities } from '../Utilities';
 import { EventService } from './event.service'
 import { Event } from '../entities/event.entity'
 
 
 
 @Controller('event')
-export class EventController extends utilitiesInterface{
+export class EventController extends Utilities{
     constructor (private readonly eventServices: EventService){
         super();
     }
@@ -41,8 +41,8 @@ export class EventController extends utilitiesInterface{
 
     @Post()
     async create(@Body() eventData: Event): Promise<Event>{  
-        this.checkParameterExistence(eventData.name);
-        this.checkParameterExistence(eventData.isActive);         
+        Utilities.checkParameterExistence(eventData.name);
+        Utilities.checkParameterExistence(eventData.isActive);         
         return this.eventServices.save(eventData);
     }    
 
@@ -50,6 +50,8 @@ export class EventController extends utilitiesInterface{
     async update (@Param('id') id: string, @Body() eventData: Event):Promise<Event>{
         const event: Event = await this.eventServices.findOne(id);
         eventData.id = id;
+        Utilities.checkParameterExistence(eventData.name);
+        Utilities.checkParameterExistence(eventData.isActive);     
         return this.eventServices.save(eventData);
     }
 

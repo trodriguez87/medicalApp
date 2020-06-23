@@ -1,16 +1,17 @@
 import { HttpException } from "@nestjs/common/exceptions";
 
 
- export class utilitiesInterface {
+ export class Utilities {
 
-    constructor(){ }
+    static parameterExistenceError = 'Some mandatory parameter(s) is/are missing';
 
-    checkParameterExistence = async(value: any) =>{
+    static checkParameterExistence (value: any) {
+
         if(value === null || !value || value === undefined) {
             throw new HttpException({
                 statusCode: 400,
                 error: 'Incorrect paremeter(s).',
-                message: value.parameterExistenceError
+                message: this.parameterExistenceError
             }, 400);
         }
     }
