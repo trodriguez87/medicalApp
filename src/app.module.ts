@@ -30,7 +30,8 @@ const password = '123';
 @Module({
   imports: [TypeOrmModule.forRoot(), 
       EventModule, 
-      DiagnoseModule],
+      DiagnoseModule,
+      MedicalCenterModule],
   controllers: [AppController],
   providers: [AppService],
 })

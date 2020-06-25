@@ -1,14 +1,28 @@
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
+*/
 import {validate} from 'class-validator';
 import {Diagnose} from '../../../src/entities/diagnoses.entity';
 import {plainToClass} from 'class-transformer';
-import { async } from 'rxjs/internal/scheduler/async';
-
 
 let diagnose:Diagnose;
 let diagnose2:Diagnose;
 beforeEach(() =>{
     diagnose  = plainToClass (Diagnose,{
-        "id": "123",
+        "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "abbreviation": "PrDig",
         "name": "Prueba Diagnóstico",
         "description": "Prueba",
@@ -16,7 +30,7 @@ beforeEach(() =>{
     });
 
     diagnose2  = plainToClass (Diagnose,{
-        "id": "123",
+        "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "abbreviation": "PrDig",
         "name": "Prueba Diagnóstico",
         "isActive": true

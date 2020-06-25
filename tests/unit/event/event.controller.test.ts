@@ -1,10 +1,26 @@
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
+*/
 import { Test, TestingModule } from '@nestjs/testing';
-import {EventController} from '../../../src/event/event.controller';
-import {EventService} from '../../../src/event/event.service';
-import {Event} from '../../../src/entities/event.entity';
-import {Repository} from 'typeorm';
-import {getRepositoryToken} from '@nestjs/typeorm';
-import {ConflictException, NotFoundException} from '@nestjs/common';
+import { EventController} from '../../../src/event/event.controller';
+import { EventService} from '../../../src/event/event.service';
+import { Event} from '../../../src/entities/event.entity';
+import { Repository} from 'typeorm';
+import { getRepositoryToken} from '@nestjs/typeorm';
+import { NotFoundException} from '@nestjs/common';
 
 
 describe("Event Center Controller", () => {
@@ -37,7 +53,7 @@ describe("Event Center Controller", () => {
     });  
 
     it('Create Event Center', async() =>{
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
         jest.spyOn(repository,'save').mockResolvedValueOnce(event);
         return expect(controller.create(event)).resolves.toBe(event)
     });
@@ -48,17 +64,17 @@ describe("Event Center Controller", () => {
         return expect(controller.getAll()).resolves.toBe(result);
     });
 
-    /*it('Update', async() =>{
+    it('Update', async() =>{
+        const eventTest = {...event, address: "NuevaDir"};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
-        test = {...event, address: "NuevaDir"};
         jest.spyOn(repository,'save').mockResolvedValueOnce(event);
-        return expect(controller.update(event)).resolves.toBe(event);
-    });*/
+        return expect(controller.update(event.id, eventTest)).resolves.toBe(event);
+    });
 
     it('isNotActive', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
         jest.spyOn(repository,'save').mockResolvedValueOnce(event);
-        return expect(controller.delete(event)).resolves.toBe(event);
+        return expect(controller.delete(event.id)).resolves.toBe(event);
     }); 
 
     it('GetAllElement - Element is Not Active', async() =>{
@@ -67,21 +83,15 @@ describe("Event Center Controller", () => {
         return expect(controller.getAll()).resolves.toBe(result);
     });
 
-    it('GetElemetExist', async() =>{
+    it('GetOneElemetExist', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
         return expect(controller.getOne("123")).resolves.toBe(event);
     });
 
 
-    /*it('GetElementNotExist', async() =>{
-        const event2: Event={
-            "id": "1234",
-            "name": "PruebaEntidadMedica",
-            "preparation": "Preparacion Prueba",
-            "isActive": true
-        };
+    it.skip('GetOneElementNotExist', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
-        return expect(controller.getOne("1234")).resolves.toBe([]);
-    });*/
+        return expect(controller.getOne("1234")).rejects.toThrowError(NotFoundException);
+    });
 
 });
