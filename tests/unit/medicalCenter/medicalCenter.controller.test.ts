@@ -30,11 +30,14 @@ describe("Medical Center Controller", () => {
     const medical: MedicalCenter={
         "id": "123",
         "name": "PruebaEntidadMedica",
-        "document": "123456",
+        "numberDocument": "123456",
+        "typeDocument": "NIT",
         "address": "Fundación",
         "phone": "2148863",
         "isActive": true
     };
+
+    const medicalTest2 = medical;
 
     beforeAll(async()=>{
         const module: TestingModule = await Test.createTestingModule({
@@ -50,8 +53,6 @@ describe("Medical Center Controller", () => {
          repository = module.get<Repository<MedicalCenter>>(getRepositoryToken(MedicalCenter));    
          
     });
-
-
    
     it('Should be defined', () =>{
         expect(controller).toBeDefined();
@@ -63,31 +64,48 @@ describe("Medical Center Controller", () => {
         return expect(controller.create(medical)).resolves.toBe(medical)
     });
 
-    /*it('Create the same medical center', async() =>{
-        const medical2: MedicalCenter={
-        "id": "1234",
-        "name": "PruebaEntidadMedica",
-        "address": "Fundación",
-        "phone": "2148863",
-        "isActive": true
-        };
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
-        jest.spyOn(repository,'save').mockResolvedValueOnce(medical2);
-        return expect(controller.create(medical2)).resolves.toBe(ConflictException);
-    });*/
-
-
     it('GetAllElement - Element is Active', async() =>{
         const result = [medical];
         jest.spyOn(repository,'find').mockResolvedValue(result);
         return expect(controller.getAll()).resolves.toBe(result);
     });
-
+        
     it('Update', async() =>{
         const medicalTest: MedicalCenter = {...medical, address: "NuevaDir"};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
-        jest.spyOn(repository,'save').mockResolvedValueOnce(medical);
-        return expect(controller.update(medical.id, medicalTest)).resolves.toBe(medical);
+        jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
+        return expect(controller.update(medicalTest.id, medicalTest)).resolves.toBe(medicalTest);
+    });
+
+    it('Update ID', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
+        const medicalTest = {...medical, id: "1234"};
+        jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
+        return expect(controller.update("123",medicalTest)).resolves.toEqual(medicalTest2);
+    });
+
+    it('Update Name', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
+        const medicalTest = {...medical, name: "Prueba"};
+        const medicalTest2 = medical;
+        jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
+        return expect(controller.update("123",medicalTest)).resolves.toEqual(medicalTest2);
+    });
+
+    it('Update TypeDocument', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
+        const medicalTest = {...medical, typeDocument: "Prueba"};
+        const medicalTest2 = medical;
+        jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
+        return expect(controller.update("123",medicalTest)).resolves.toEqual(medicalTest2);
+    });
+
+    it('Update NumberDocument', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
+        const medicalTest = {...medical, name: "111"};
+        const medicalTest2 = medical;
+        jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
+        return expect(controller.update("123",medicalTest)).resolves.toEqual(medicalTest2);
     });
 
     it('isNotActive', async() =>{
@@ -112,5 +130,4 @@ describe("Medical Center Controller", () => {
         jest.spyOn(repository,'findOne').mockResolvedValue(medical);
         return await expect(controller.getOne("1234")).resolves.toBe(NotFoundException);
     });
-
 });

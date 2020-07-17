@@ -27,12 +27,12 @@ export class Diagnose{
     @IsOptional()
     id: string;
 
-    @Column({type: 'varchar', length: 30, nullable:false})
+    @Column({type: 'varchar', length: 30, nullable:false, unique: true})
     @IsDefined()
     @Length(2,30)
     abbreviation: string;
 
-    @Column({type: 'varchar', length: 30, nullable:false})
+    @Column({type: 'varchar', length: 30, nullable:false, unique: true})
     @IsDefined()
     @Length(2,30)
     name: string;

@@ -24,7 +24,8 @@ beforeEach(() =>{
     medical  = plainToClass (MedicalCenter,{
         "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "name": "PruebaEntidadMedica",
-        "document" : "123456",
+        "numberDocument": "123456",
+        "typeDocument": "NIT",
         "address": "Fundación",
         "phone": "2148863",
         "isActive": true
@@ -35,33 +36,92 @@ it('Medical Center', async() => {
     expect(await validate(medical)).toEqual([]);
 });
 
-it('Field ID is undefined', async() =>{
+it('Field ID is empty', async() =>{
     medical.id = '';
     expect (Error[0]).toBe(undefined);
 });
 
-it('Field Name is undefined', async() =>{
+it('Field ID is undefined', async() =>{
+    medical.id = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field ID is null', async() =>{
+    medical.id = null;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Name is empty', async() =>{
     medical.name = '';
     expect (Error[0]).toBe(undefined);
 });
 
-it('Field Address is undefined', async() => {
+it('Field Name is undefined', async() =>{
+    medical.name = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Name is null', async() =>{
+    medical.name = null;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Address is empty', async() => {
     medical.address = '';
     expect(Error[0]).toBe(undefined);
 });
 
-it('Field Phone is undefined', async() => {
+it('Field Address is undefined', async() => {
+    medical.address = undefined;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field Address is null', async() => {
+    medical.address = null;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field Phone is empty', async() => {
     medical.phone = '';
     expect(Error[0]).toBe(undefined);
 });
 
-it('Field Document is undefined', async() => {
-    medical.document = '';
+it('Field Phone is undefined', async() => {
+    medical.phone = undefined;
     expect(Error[0]).toBe(undefined);
 });
 
+it('Field Phone is null', async() => {
+    medical.phone = null;
+    expect(Error[0]).toBe(undefined);
+});
 
+it('Field Type Document is empty', async() => {
+    medical.typeDocument = '';
+    expect(Error[0]).toBe(undefined);
+});
 
+it('Field Type Document is undefined', async() => {
+    medical.typeDocument = undefined;
+    expect(Error[0]).toBe(undefined);
+});
 
+it('Field Type Document is null', async() => {
+    medical.typeDocument = null;
+    expect(Error[0]).toBe(undefined);
+});
 
+it('Field Number Document is empty', async() => {
+    medical.numberDocument = '';
+    expect(Error[0]).toBe(undefined);
+});
 
+it('Field Number Document is undefined', async() => {
+    medical.numberDocument = undefined;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field Number Document is null', async() => {
+    medical.numberDocument = null;
+    expect(Error[0]).toBe(undefined);
+});

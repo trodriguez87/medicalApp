@@ -67,11 +67,19 @@ describe("Event Center Controller", () => {
     it('Update', async() =>{
         const eventTest = {...event, address: "NuevaDir"};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
-        jest.spyOn(repository,'save').mockResolvedValueOnce(event);
-        return expect(controller.update(event.id, eventTest)).resolves.toBe(event);
+        jest.spyOn(repository,'save').mockResolvedValueOnce(eventTest);
+        return expect(controller.update(eventTest.id, eventTest)).resolves.toBe(eventTest);
     });
 
-    it('isNotActive', async() =>{
+    it('Update ID', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
+        const eventTest = {...event, id: "1234"};
+        const eventTest2 = event;
+        jest.spyOn(repository,'save').mockResolvedValueOnce(eventTest);
+        return expect(controller.update("123", eventTest)).resolves.toEqual(eventTest2);
+    });
+
+    it('Delete', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(event);
         jest.spyOn(repository,'save').mockResolvedValueOnce(event);
         return expect(controller.delete(event.id)).resolves.toBe(event);
@@ -88,10 +96,8 @@ describe("Event Center Controller", () => {
         return expect(controller.getOne("123")).resolves.toBe(event);
     });
 
-
     it.skip('GetOneElementNotExist', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
         return expect(controller.getOne("1234")).rejects.toThrowError(NotFoundException);
     });
-
 });

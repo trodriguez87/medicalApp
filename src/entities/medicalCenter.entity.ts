@@ -34,7 +34,12 @@ export class MedicalCenter{
     @Column({type: 'varchar', length: 30, unique:true, nullable:false})
     @IsDefined()
     @Length(2,30)
-    document: string;
+    typeDocument: string;
+
+    @Column({type: 'varchar', length: 30, unique:true, nullable:false})
+    @IsDefined()
+    @Length(2,30)
+    numberDocument: string;
 
     @Column({type: 'varchar', length: 100, nullable: false})
     @IsDefined()

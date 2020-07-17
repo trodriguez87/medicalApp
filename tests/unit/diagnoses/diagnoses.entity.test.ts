@@ -45,17 +45,57 @@ it('diagnose without description', async() => {
     expect(await validate(diagnose2)).toEqual([]);
 });
 
-it('Field ID is undefined', async() =>{
+it('Field ID is empty', async() =>{
     diagnose.id = '';
     expect (Error[0]).toBe(undefined);
 });
 
+it('Field ID is null', async() =>{
+    diagnose.id = null;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field ID is undefined', async() =>{
+    diagnose.id = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
 it('Field Name is undefined', async() =>{
+    diagnose.name = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Name is empty', async() =>{
     diagnose.name = '';
     expect (Error[0]).toBe(undefined);
 });
 
+it('Field Name is null', async() =>{
+    diagnose.name = null;
+    expect (Error[0]).toBe(undefined);
+});
+
 it('Field Abbreviation is undefined', async() => {
+    diagnose.abbreviation = undefined;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field Abbreviation is empty', async() => {
     diagnose.abbreviation = '';
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field Abbreviation is null', async() => {
+    diagnose.abbreviation = null;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field isActive is null', async() => {
+    diagnose.isActive = null;
+    expect(Error[0]).toBe(undefined);
+});
+
+it('Field isActive is undefined', async() => {
+    diagnose.isActive = undefined;
     expect(Error[0]).toBe(undefined);
 });

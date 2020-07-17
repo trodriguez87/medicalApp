@@ -19,7 +19,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Diagnose } from '../entities/diagnoses.entity';
-import { Repository, UpdateResult, DeleteResult } from 'typeorm';
+import { Repository} from 'typeorm';
 
 @Injectable()
 export class DiagnoseService {

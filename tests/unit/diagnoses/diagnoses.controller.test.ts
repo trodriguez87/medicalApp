@@ -59,19 +59,12 @@ describe("Diagnoses Controller", () => {
         return expect(controller.create(diagnose)).resolves.toBe(diagnose)
     });
 
-    /*it('Create the same diagnose', async() =>{
-        const diagnose2: Diagnose={
-            "id": "123",
-            "abbreviation": "PrDig",
-            "name": "Prueba Diagnóstico",
-            "description": "Prueba",
-            "isActive": true
-        };
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
-        jest.spyOn(repository,'save').mockResolvedValueOnce(diagnose2);
-        return expect(controller.create(diagnose2)).resolves.toBe(ConflictException);
-    });*/
-
+    it.skip('Create the same diagnose', async() =>{
+        const diagnoseTest = diagnose;
+        //jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
+        jest.spyOn(repository,'save').mockResolvedValueOnce(diagnoseTest);
+        return expect(controller.create(diagnoseTest)).rejects.toEqual(Error('Internal server error'));
+    });
 
     it('GetAllElement - Element is Active', async() =>{
         const result = [diagnose];
@@ -80,16 +73,25 @@ describe("Diagnoses Controller", () => {
     });
 
     it('Update', async() =>{
-        const diagnoseTest = {...diagnose, description: "NuevaDes"};
+        const diagnoseTest = {...diagnose, description: "NuevaDescr"};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
-        jest.spyOn(repository,'save').mockResolvedValueOnce(diagnose);
-        return expect(controller.update(diagnose.id,diagnoseTest)).resolves.toBe(diagnose);
+        jest.spyOn(repository,'save').mockResolvedValueOnce(diagnoseTest);
+        return expect(controller.update(diagnoseTest.id,diagnoseTest)).resolves.toBe(diagnoseTest);
+    });
+
+    it('Update ID', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
+        const diagnoseTest = {...diagnose, id: "1234"};
+        const diagnoseTest2 = diagnose;
+        jest.spyOn(repository,'save').mockResolvedValueOnce(diagnoseTest);
+        return expect(controller.update("123",diagnoseTest)).resolves.toEqual(diagnoseTest2);
     });
 
     it('isNotActive', async() =>{
+        const diagnoseTest = {...diagnose, isActive: false};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
         jest.spyOn(repository,'save').mockResolvedValueOnce(diagnose);
-        return expect(controller.delete(diagnose.id)).resolves.toBe(diagnose);
+        return expect((controller.delete(diagnose.id))).resolves.toEqual(diagnoseTest);
     }); 
 
     it('GetAllElement - Element is Not Active', async() =>{
@@ -103,11 +105,10 @@ describe("Diagnoses Controller", () => {
         return expect(controller.getOne("123")).resolves.toBe(diagnose);
     });
 
-
-    it.skip('GetElementNotExist', async() =>{
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
-        return expect(controller.getOne("1234")).rejects.toThrowError(NotFoundException);
+    it.skip ('GetElementNotExist', async() =>{
+        const result = [];
+        const diagnoseTest = {...diagnose, id: "1234"};
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(diagnose);
+        return expect(controller.getOne(diagnoseTest.id)).rejects.toThrowError(NotFoundException);
     });
-
-
 });

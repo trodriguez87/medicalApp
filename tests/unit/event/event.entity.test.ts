@@ -29,23 +29,47 @@ beforeEach(() =>{
         "preparation": "Preparacion Prueba",
         "isActive": true
     });
+    event2  = plainToClass (Event,{
+        "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
+        "name": "PruebaEntidadMedica",
+        "isActive": true
+    });
 });    
 
-it('Event', async() => {
+it('Event all fields', async() => {
     expect(await validate(event)).toEqual([]);
 });
 
-it('Field ID is undefined', async() =>{
+it('Event without preparation', async() => {
+    expect(await validate(event2)).toEqual([]);
+});
+
+it('Field ID is empty', async() =>{
     event.id = '';
     expect (Error[0]).toBe(undefined);
 });
 
-it('Field Name is undefined', async() =>{
+it('Field ID is undefined', async() =>{
+    event.id = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field ID is null', async() =>{
+    event.id = null;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Name is empty', async() =>{
     event.name = '';
     expect (Error[0]).toBe(undefined);
 });
 
-it('Field Prepation is undefined', async() => {
-    event.preparation = '';
-    expect(await validate(event)).toEqual([]);
+it('Field Name is undefined', async() =>{
+    event.name = undefined;
+    expect (Error[0]).toBe(undefined);
+});
+
+it('Field Name is null', async() =>{
+    event.name = null;
+    expect (Error[0]).toBe(undefined);
 });

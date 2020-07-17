@@ -22,11 +22,9 @@ import { MedicalCenterService } from './medical-center.service';
 import { MedicalCenter } from '../entities/medicalCenter.entity';
 
 @Controller('medical-center')
-export class MedicalCenterController extends Utilities {
+export class MedicalCenterController{
 
-    constructor (private readonly medicalServices: MedicalCenterService){
-        super();
-    }
+    constructor (private readonly medicalServices: MedicalCenterService){}
     
     @Get()
     async getAll():Promise<MedicalCenter[]> {
@@ -41,24 +39,24 @@ export class MedicalCenterController extends Utilities {
     @Post()
     async create (@Body() medicalData: MedicalCenter): Promise<MedicalCenter>{
         Utilities.checkParameterExistence(medicalData.address);
-        Utilities.checkParameterExistence(medicalData.document);
-        Utilities.checkParameterExistence(medicalData.isActive);
+        Utilities.checkParameterExistence(medicalData.typeDocument);
+        Utilities.checkParameterExistence(medicalData.numberDocument);
         Utilities.checkParameterExistence(medicalData.name);
         Utilities.checkParameterExistence(medicalData.phone);
-
+        medicalData.isActive = true;
         return this.medicalServices.save(medicalData);
     }
 
     @Put(':id')
     async update(@Param('id') id:string, @Body() medicalData: MedicalCenter): Promise<MedicalCenter>{
         const medical: MedicalCenter = await this.medicalServices.findOne(id);
-        medicalData.id = id;
+        medicalData.id = medical.id;        
+        medicalData.name = medical.name;
+        medicalData.typeDocument = medical.typeDocument;
+        medicalData.numberDocument = medical.numberDocument;
         Utilities.checkParameterExistence(medicalData.address);
-        Utilities.checkParameterExistence(medicalData.document);
         Utilities.checkParameterExistence(medicalData.isActive);
-        Utilities.checkParameterExistence(medicalData.name);
         Utilities.checkParameterExistence(medicalData.phone);
-
         return this.medicalServices.save(medicalData);
     }
 
@@ -68,6 +66,4 @@ export class MedicalCenterController extends Utilities {
         medical.isActive = false;
         return this.medicalServices.save(medical);
     }
-
- 
 }
