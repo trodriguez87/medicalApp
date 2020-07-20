@@ -12,19 +12,22 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
-  
-
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
 */
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { HttpException } from "@nestjs/common/exceptions";
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+ export class Utilities {
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+    static parameterExistenceError = 'Some mandatory parameter(s) is/are missing';
+
+    static checkParameterExistence (value: any) {
+
+        if(value === null || !value || value === undefined) {
+            throw new HttpException({
+                statusCode: 400,
+                error: 'Incorrect paremeter(s).',
+                message: this.parameterExistenceError
+            }, 400);
+        }
+    }
 }

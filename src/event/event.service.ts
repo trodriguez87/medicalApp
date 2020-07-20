@@ -1,4 +1,22 @@
-import { Injectable } from '@nestjs/common';
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
+  
+
+*/
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Event } from '../entities/event.entity';
 import { Repository, UpdateResult, DeleteResult } from 'typeorm';
@@ -16,24 +34,14 @@ export class EventService {
     }
 
     async findOne(idEvent: string): Promise<Event>{
-        return await this.eventRepository.findOne(idEvent);
+        const event: Event = await this.eventRepository.findOne(idEvent);
+        if(!event) {
+                throw new NotFoundException()
+        }
+        return event;
     }
 
-    /*async findActive(active: string):Promise<Event[]>{
-        return await this.eventRepository.find({where: {active: true}});
-    }*/
-
-    async create(event: Event): Promise<Event>{
+    async save(event: Event): Promise<Event>{
         return await this.eventRepository.save(event);
     }
-
-    async update(event: Event): Promise<Event>{
-        return await this.eventRepository.save(event);
-    }
-
-    async notActive (event: Event): Promise<Event>{
-        return await this.eventRepository.save(event);
-    }
-
-
 }
