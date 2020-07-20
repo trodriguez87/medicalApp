@@ -20,29 +20,40 @@ import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
 
 @Entity()
-export class Diagnose{ 
-
+export class MedicalCenter{ 
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
     @IsOptional()
     id: string;
 
-    @Column({type: 'varchar', length: 30, nullable:false, unique: true})
-    @IsDefined()
-    @Length(2,30)
-    abbreviation: string;
-
-    @Column({type: 'varchar', length: 30, nullable:false, unique: true})
+    @Column({type: 'varchar', length: 30, unique: true, nullable:false})
     @IsDefined()
     @Length(2,30)
     name: string;
+    
+    @Column({type: 'varchar', length: 30, unique:true, nullable:false})
+    @IsDefined()
+    @Length(2,30)
+    typeDocument: string;
 
-    @Column({type: 'varchar', length: 60, nullable:true})
-    @IsOptional()
-    @Length(0,60)
-    description: string;
+    @Column({type: 'varchar', length: 30, unique:true, nullable:false})
+    @IsDefined()
+    @Length(2,30)
+    numberDocument: string;
 
+    @Column({type: 'varchar', length: 100, nullable: false})
+    @IsDefined()
+    @Length(2,100)
+    address: string;
+    
+    @Column ({type: 'varchar', length: 20, nullable: false})
+    @IsDefined()
+    @Length(2,20)
+    phone: string;
+    
     @Column ({nullable: false})
+    @IsDefined()
     @IsBoolean()
     isActive: boolean;
+
 }

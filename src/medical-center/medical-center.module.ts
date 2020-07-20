@@ -12,22 +12,21 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { HttpException } from "@nestjs/common/exceptions";
+import { Module } from '@nestjs/common';
+import { MedicalCenterController } from './medical-center.controller';
+import { MedicalCenterService } from './medical-center.service';
+import { MedicalCenter } from '../entities/medicalCenter.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
- export class Utilities {
 
-    static parameterExistenceError = 'Some mandatory parameter(s) is/are missing';
-
-    static checkParameterExistence (value: any) {
-
-        if(value === null || !value || value === undefined) {
-            throw new HttpException({
-                statusCode: 400,
-                error: 'Incorrect paremeter(s).',
-                message: this.parameterExistenceError
-            }, 400);
-        }
-    }
-}
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([MedicalCenter])
+  ],
+  controllers: [MedicalCenterController],
+  providers: [MedicalCenterService],
+  exports: [MedicalCenterService]
+})
+export class MedicalCenterModule {}

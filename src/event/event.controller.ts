@@ -24,10 +24,8 @@ import { Event } from '../entities/event.entity'
 
 
 @Controller('event')
-export class EventController extends Utilities{
-    constructor (private readonly eventServices: EventService){
-        super();
-    }
+export class EventController{
+    constructor (private readonly eventServices: EventService){}
     
     @Get()
     async getAll():Promise<Event[]> {
@@ -42,14 +40,14 @@ export class EventController extends Utilities{
     @Post()
     async create(@Body() eventData: Event): Promise<Event>{  
         Utilities.checkParameterExistence(eventData.name);
-        Utilities.checkParameterExistence(eventData.isActive);         
+        eventData.isActive = true;  
         return this.eventServices.save(eventData);
     }    
 
     @Put(':id')
     async update (@Param('id') id: string, @Body() eventData: Event):Promise<Event>{
         const event: Event = await this.eventServices.findOne(id);
-        eventData.id = id;
+        eventData.id = event.id;
         Utilities.checkParameterExistence(eventData.name);
         Utilities.checkParameterExistence(eventData.isActive);     
         return this.eventServices.save(eventData);
@@ -61,5 +59,4 @@ export class EventController extends Utilities{
         event.isActive = false;
         return this.eventServices.save(event);
     }
-
 }

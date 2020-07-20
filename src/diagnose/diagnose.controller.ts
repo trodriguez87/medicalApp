@@ -22,11 +22,9 @@ import { DiagnoseService} from './diagnose.service';
 import { Diagnose} from '../entities/diagnoses.entity';
 
 @Controller('diagnose')
-export class DiagnoseController extends Utilities{
+export class DiagnoseController {
 
-    constructor(private readonly diagnoseServices:DiagnoseService){
-        super();
-    }
+    constructor(private readonly diagnoseServices:DiagnoseService){}
 
     @Get()
     async getAll(): Promise<Diagnose[]>{
@@ -42,19 +40,18 @@ export class DiagnoseController extends Utilities{
     async create (@Body() diagnoseData: Diagnose): Promise<Diagnose>{
         Utilities.checkParameterExistence(diagnoseData.abbreviation);
         Utilities.checkParameterExistence(diagnoseData.name);
-        Utilities.checkParameterExistence(diagnoseData.isActive);
+        diagnoseData.isActive = true;
         return this.diagnoseServices.save(diagnoseData);
     }
 
     @Put(':id')
     async update(@Param('id') id:string, @Body() diagnoseData: Diagnose): Promise<Diagnose>{
         const diagnose: Diagnose = await this.diagnoseServices.findOne(id);
-        diagnoseData.id = id;
+        diagnoseData.id = diagnose.id;
         Utilities.checkParameterExistence(diagnoseData.abbreviation);
         Utilities.checkParameterExistence(diagnoseData.name);
         Utilities.checkParameterExistence(diagnoseData.isActive);
         return this.diagnoseServices.save(diagnoseData);
-        
     }
 
     @Delete(':id')
@@ -64,6 +61,3 @@ export class DiagnoseController extends Utilities{
         return this.diagnoseServices.save(diagnose)
     }
 }
-
-
-
