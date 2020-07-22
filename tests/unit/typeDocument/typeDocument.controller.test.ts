@@ -1,23 +1,41 @@
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
+  
+
+*/
 import { Test, TestingModule } from '@nestjs/testing';
 import {DocumentController} from '../../../src/document/document.controller';
 import {DocumentService} from '../../../src/document/document.service';
 import {TypeDocument} from '../../../src/entities/typeDocument.entity';
-
 import {Repository} from 'typeorm';
 import {getRepositoryToken} from '@nestjs/typeorm';
-import {ConflictException, NotFoundException} from '@nestjs/common';
+import { NotFoundException} from '@nestjs/common';
 
 
 describe("Type Document Controller", () => {
     let controller: DocumentController;
     let repository: Repository<TypeDocument>;
 
-    const document: TypeDocument={
-        "id": "123",
-        "abbreviation": "CC",
-        "name": "Cédula de Ciudadanía",
-        "isActive": true
-    };
+    const document = new TypeDocument();
+    document.id = "123";
+    document.abbreviation = "CC";
+    document.name = "Cédula de Ciudadanía";
+    document.isActive = true;
+
+    const documentTest2 = document;
 
     beforeAll(async()=>{
         const module: TestingModule = await Test.createTestingModule({
@@ -38,7 +56,7 @@ describe("Type Document Controller", () => {
     });  
 
     it('Create Type Document', async() =>{
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(document);
         jest.spyOn(repository,'save').mockResolvedValueOnce(document);
         return expect(controller.create(document)).resolves.toBe(document)
     });
@@ -49,17 +67,24 @@ describe("Type Document Controller", () => {
         return expect(controller.getAll()).resolves.toBe(result);
     });
 
-    /*it('Update', async() =>{
+    it('Update', async() =>{
+        const documentTest: TypeDocument = {...document, name: "Cédula"};
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(document);
-        test = {...this.document, name: 'nuevo'};
-        jest.spyOn(repository,'save').mockResolvedValueOnce(document);
-        return expect(controller.update(document)).resolves.toBe(document);
-    });*/
+        jest.spyOn(repository,'save').mockResolvedValueOnce(documentTest);
+        return expect(controller.update(documentTest.id, documentTest)).resolves.toBe(documentTest);
+    });
+
+    it('Update ID', async() =>{
+        jest.spyOn(repository,'findOne').mockResolvedValueOnce(document);
+        const documentTest: TypeDocument = {...document, id: "12345"};
+        jest.spyOn(repository,'save').mockResolvedValueOnce(documentTest);
+        return expect(controller.update("123",documentTest)).resolves.toEqual(documentTest2);
+    });
 
     it('isNotActive', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(document);
         jest.spyOn(repository,'save').mockResolvedValueOnce(document);
-        return expect(controller.delete(document)).resolves.toBe(document);
+        return expect(controller.delete(document.id)).resolves.toBe(document);
     }); 
 
     it('GetAllElement - Element is Not Active', async() =>{
@@ -72,18 +97,4 @@ describe("Type Document Controller", () => {
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(document);
         return expect(controller.getOne("123")).resolves.toBe(document);
     });
-
-
-    /*it('GetElementNotExist', async() =>{
-        const medical2: MedicalCenter={
-            "id": "1234",
-            "name": "Otro Centro",
-            "address": "Otro",
-            "phone": "Otro",
-            "isActive": true
-        };
-        jest.spyOn(repository,'findOne').mockResolvedValueOnce(undefined);
-        return expect(controller.getOne("1234")).resolves.toBe([]);
-    });*/
-
 });

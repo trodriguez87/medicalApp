@@ -18,31 +18,30 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MedicalCenterController} from '../../../src/medical-center/medical-center.controller';
 import { MedicalCenterService} from '../../../src/medical-center/medical-center.service';
 import { MedicalCenter} from '../../../src/entities/medicalCenter.entity';
+import { TypeDocument } from '../../../src/entities/typeDocument.entity';
 import { Repository} from 'typeorm';
 import { getRepositoryToken} from '@nestjs/typeorm';
 import { NotFoundException} from '@nestjs/common';
-
 
 describe("Medical Center Controller", () => {
     let controller: MedicalCenterController;
     let repository: Repository<MedicalCenter>;
 
+    const typeDoc = new TypeDocument();
+    typeDoc.abbreviation = "RUT";
+    typeDoc.name = "Registro único Tributario"; 
 
-    const event: Event={
-        "id": "123",
-        "name": "PruebaEntidadMedica",
-        "preparation": "Preparacion Prueba",
-        "isActive": true
-    };
-
+    let typeDoc2 = new TypeDocument();
+    typeDoc2.abbreviation = "CC";
+    typeDoc2.name = "Cédula de Ciudadanía"; 
+    
     const medical: MedicalCenter={
         "id": "123",
         "name": "PruebaEntidadMedica",
         "numberDocument": "123456",
-        "typeDocument": "NIT",
+        "typeDocument": typeDoc,
         "address": "Fundación",
         "phone": "2148863",
-        "events": [event],
         "isActive": true
     };
 
@@ -103,7 +102,7 @@ describe("Medical Center Controller", () => {
 
     it('Update TypeDocument', async() =>{
         jest.spyOn(repository,'findOne').mockResolvedValueOnce(medical);
-        const medicalTest = {...medical, typeDocument: "Prueba"};
+        const medicalTest = {...medical, typeDocument: typeDoc2};
         const medicalTest2 = medical;
         jest.spyOn(repository,'save').mockResolvedValueOnce(medicalTest);
         return expect(controller.update("123",medicalTest)).resolves.toEqual(medicalTest2);
