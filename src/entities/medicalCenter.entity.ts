@@ -16,11 +16,15 @@
   
 
 */
-import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,ManyToMany, JoinTable, ManyToOne} from 'typeorm';
 import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
+import { Event } from './event.entity';
+import { TypeDocument } from './typeDocument.entity';
+
 
 @Entity()
 export class MedicalCenter{ 
+
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
     @IsOptional()
@@ -28,27 +32,22 @@ export class MedicalCenter{
 
     @Column({type: 'varchar', length: 30, unique: true, nullable:false})
     @IsDefined()
-    @Length(2,30)
+    @Length(0,30)
     name: string;
     
     @Column({type: 'varchar', length: 30, unique:true, nullable:false})
     @IsDefined()
-    @Length(2,30)
-    typeDocument: string;
-
-    @Column({type: 'varchar', length: 30, unique:true, nullable:false})
-    @IsDefined()
-    @Length(2,30)
+    @Length(0,30)
     numberDocument: string;
 
     @Column({type: 'varchar', length: 100, nullable: false})
     @IsDefined()
-    @Length(2,100)
+    @Length(0,100)
     address: string;
     
     @Column ({type: 'varchar', length: 20, nullable: false})
     @IsDefined()
-    @Length(2,20)
+    @Length(0,20)
     phone: string;
     
     @Column ({nullable: false})
@@ -56,4 +55,6 @@ export class MedicalCenter{
     @IsBoolean()
     isActive: boolean;
 
+    @ManyToOne (() => TypeDocument, (typeDoocument) => typeDoocument.medicals)
+    typeDocument: TypeDocument;
 }

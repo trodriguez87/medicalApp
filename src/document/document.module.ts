@@ -12,28 +12,20 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
-  
-
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
 */
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { DocumentController } from './document.controller';
+import { DocumentService } from './document.service';
+import { TypeDocument } from '../entities/typeDocument.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventModule } from './event/event.module';
-import { DiagnoseModule } from './diagnose/diagnose.module';
-import { MedicalCenterModule } from './medical-center/medical-center.module';
-import { DocumentModule } from './document/document.module';
-
-const username = 'postgres';
-const password = '123';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), 
-      EventModule, 
-      DiagnoseModule,
-      MedicalCenterModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forFeature([TypeDocument])
+  ],
+  controllers: [DocumentController],
+  providers: [DocumentService],
+  exports: [DocumentService]
 })
-export class AppModule {}
+export class DocumentModule {}

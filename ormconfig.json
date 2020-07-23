@@ -7,5 +7,7 @@
   "database": "medicalapp",
   "entities": ["dist/**/*.entity.js"],
   "synchronize": true,
-  "logging": true
+  "logging": true,
+  "migrations": ["migrations/**/*.ts"],
+  "subscribers": ["subscriber/**/*.ts", "dist/subscriber/**/.js"]
 }

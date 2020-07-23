@@ -14,18 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
 */
-import {validate} from 'class-validator';
-import {MedicalCenter} from '../../../src/entities/medicalCenter.entity';
-import {plainToClass} from 'class-transformer';
+import { validate } from 'class-validator';
+import { MedicalCenter } from '../../../src/entities/medicalCenter.entity';
+import { TypeDocument } from '../../../src/entities/typeDocument.entity';
+import { plainToClass } from 'class-transformer';
 
 let medical:MedicalCenter;
 
 beforeEach(() =>{
+
+    let typeDoc = new TypeDocument();
+    typeDoc.abbreviation = "RUT";
+    typeDoc.name = "Registro único Tributario"; 
+
     medical  = plainToClass (MedicalCenter,{
         "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "name": "PruebaEntidadMedica",
         "numberDocument": "123456",
-        "typeDocument": "NIT",
+        "typeDocument": typeDoc,
         "address": "Fundación",
         "phone": "2148863",
         "isActive": true
@@ -93,11 +99,6 @@ it('Field Phone is undefined', async() => {
 
 it('Field Phone is null', async() => {
     medical.phone = null;
-    expect(Error[0]).toBe(undefined);
-});
-
-it('Field Type Document is empty', async() => {
-    medical.typeDocument = '';
     expect(Error[0]).toBe(undefined);
 });
 
