@@ -1,11 +1,28 @@
-import { Injectable } from '@nestjs/common';
+/*
+  This file is part of medicalApp.
+
+    medicalApp is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    medicalApp is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
+  
+
+*/
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeDocument} from '../entities/typeDocument.entity';
 
 @Injectable()
 export class DocumentService {
-
 
     constructor(@InjectRepository (TypeDocument)
         private documentRepository: Repository<TypeDocument>){
@@ -16,20 +33,14 @@ export class DocumentService {
     }
 
     async findOne(idDocument: string): Promise<TypeDocument>{
-        return await this.documentRepository.findOne(idDocument);
+        const document: TypeDocument = await this.documentRepository.findOne(idDocument);
+        if(!document){
+            throw new NotFoundException();
+        }
+        return document;
     }
 
-    async create(document: TypeDocument): Promise<TypeDocument>{
+    async save(document: TypeDocument): Promise<TypeDocument>{
         return await this.documentRepository.save(document);
     }
-
-    async update(document: TypeDocument): Promise<TypeDocument>{
-        return await this.documentRepository.save(document);
-    }
-
-    async notActive (document: TypeDocument): Promise<TypeDocument>{
-        return await this.documentRepository.save(document);
-    }
-    
 }
-
