@@ -15,18 +15,18 @@
     along with Foobar.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { Module } from '@nestjs/common';
-import { MedicalCenterController } from './medical-center.controller';
-import { MedicalCenterService } from './medical-center.service';
-import { MedicalCenter } from '../entities/medicalCenter.entity';
+import { IPSController } from './IPS.controller';
+import { IPSService } from './IPS.service';
+import { IPS } from '../entities/IPS.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([MedicalCenter])
+    TypeOrmModule.forFeature([IPS])
   ],
-  controllers: [MedicalCenterController],
-  providers: [MedicalCenterService],
-  exports: [MedicalCenterService]
+  controllers: [IPSController],
+  providers: [IPSService],
+  exports: [IPSService]
 })
-export class MedicalCenterModule {}
+export class IPSModule {}

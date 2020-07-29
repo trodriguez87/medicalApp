@@ -17,8 +17,7 @@
 import {validate} from 'class-validator';
 import {Event} from '../../../src/entities/event.entity';
 import {plainToClass} from 'class-transformer';
-import { async } from 'rxjs/internal/scheduler/async';
-import { MedicalCenter } from 'src/entities/medicalCenter.entity';
+
 
 
 let event:Event;

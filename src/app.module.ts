@@ -22,7 +22,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventModule } from './event/event.module';
 import { DiagnoseModule } from './diagnose/diagnose.module';
-import { MedicalCenterModule } from './medical-center/medical-center.module';
+import { IPSModule } from './IPS/IPS.module';
 import { DocumentModule } from './document/document.module';
 import { MedicalEntityModule } from './medical-entity/medical-entity.module';
 
@@ -33,7 +33,7 @@ const password = '123';
   imports: [TypeOrmModule.forRoot(), 
       EventModule, 
       DiagnoseModule,
-      MedicalCenterModule,
+      IPSModule,
       DocumentModule,
       MedicalEntityModule],
   controllers: [AppController],

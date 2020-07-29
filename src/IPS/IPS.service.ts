@@ -19,28 +19,28 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository} from 'typeorm';
-import { MedicalCenter } from '../entities/medicalCenter.entity';
+import { IPS } from '../entities/IPS.entity';
 
 @Injectable()
-export class MedicalCenterService {
+export class IPSService {
 
-    constructor (@InjectRepository(MedicalCenter) private medicalRepository: Repository<MedicalCenter>){
+    constructor (@InjectRepository(IPS) private medicalRepository: Repository<IPS>){
 
     }
 
-    async findAll(): Promise<MedicalCenter[]>{
+    async findAll(): Promise<IPS[]>{
         return await this.medicalRepository.find({where: {isActive: true}});
     }
 
-    async findOne(idCenter: string): Promise<MedicalCenter>{
-        const medical: MedicalCenter = await this.medicalRepository.findOne(idCenter)
+    async findOne(idCenter: string): Promise<IPS>{
+        const medical: IPS = await this.medicalRepository.findOne(idCenter)
         if(!medical) {
                 throw new NotFoundException()
         }
         return medical;
     }
 
-    async save(medical: MedicalCenter): Promise<MedicalCenter>{
+    async save(medical: IPS): Promise<IPS>{
         return await this.medicalRepository.save(medical);
     }
 }

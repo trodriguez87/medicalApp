@@ -18,7 +18,8 @@
 */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
 import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
-import { MedicalCenter } from './medicalCenter.entity';
+import { IPS } from './IPS.entity';
+import { MedicalEntity } from './medicalEntity.entity';
 
 @Entity()
 export class TypeDocument{ 
@@ -43,6 +44,9 @@ export class TypeDocument{
     @IsBoolean()
     isActive: boolean;
 
-    @OneToMany(() => MedicalCenter, (medicalCenter) => medicalCenter.typeDocument)
-    medicals: MedicalCenter[];
+    @OneToMany(() => IPS, (ips) => ips.typeDocument)
+    ips: IPS[];
+
+    @OneToMany(() => MedicalEntity, (medicalEntity) => medicalEntity.typeDocument)
+    medicalEntity: MedicalEntity[];
 }

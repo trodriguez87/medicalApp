@@ -16,14 +16,13 @@
   
 
 */
-import { Entity, Column, PrimaryGeneratedColumn,ManyToMany, JoinTable, ManyToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
 import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
-import { Event } from './event.entity';
 import { TypeDocument } from './typeDocument.entity';
 
 
 @Entity()
-export class MedicalCenter{ 
+export class IPS{ 
 
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
@@ -55,6 +54,7 @@ export class MedicalCenter{
     @IsBoolean()
     isActive: boolean;
 
-    @ManyToOne (() => TypeDocument, (typeDoocument) => typeDoocument.medicals)
+    @ManyToOne (() => TypeDocument, (typeDocument: TypeDocument) => typeDocument.ips)
+    @IsDefined()
     typeDocument: TypeDocument;
 }
