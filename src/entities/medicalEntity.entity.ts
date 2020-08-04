@@ -49,6 +49,5 @@ export class MedicalEntity{
     isActive: boolean;
     
     @ManyToOne (() => TypeDocument, (typeDocument: TypeDocument) => typeDocument.medicalEntity)
-    @IsDefined()
     typeDocument: TypeDocument;
 }

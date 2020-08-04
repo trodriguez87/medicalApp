@@ -55,6 +55,5 @@ export class IPS{
     isActive: boolean;
 
     @ManyToOne (() => TypeDocument, (typeDocument: TypeDocument) => typeDocument.ips)
-    @IsDefined()
     typeDocument: TypeDocument;
 }
