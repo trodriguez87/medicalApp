@@ -18,26 +18,28 @@
 */
 import { Controller, Body, Param, Get, Delete,Post, Put, HttpException } from '@nestjs/common';
 import { Utilities} from '../Utilities';
-import { MedicalCenterService } from './medical-center.service';
-import { MedicalCenter } from '../entities/medicalCenter.entity';
+import { IPSService } from './IPS.service';
+import { IPS } from '../entities/IPS.entity';
+import { DocumentService } from 'src/document/document.service';
 
-@Controller('medical-center')
-export class MedicalCenterController{
 
-    constructor (private readonly medicalServices: MedicalCenterService){}
+@Controller('ips')
+export class IPSController{
+
+    constructor (private readonly medicalServices: IPSService){}
     
     @Get()
-    async getAll():Promise<MedicalCenter[]> {
+    async getAll():Promise<IPS[]> {
         return this.medicalServices.findAll();
     }
     
     @Get(':idCenter')
-    async getOne(@Param('idCenter') idCenter:string):Promise<MedicalCenter>{
+    async getOne(@Param('idCenter') idCenter:string):Promise<IPS>{
         return this.medicalServices.findOne(idCenter);
     }
 
     @Post()
-    async create (@Body() medicalData: MedicalCenter): Promise<MedicalCenter>{
+    async create (@Body() medicalData: IPS): Promise<IPS>{
         Utilities.checkParameterExistence(medicalData.address);
         Utilities.checkParameterExistence(medicalData.typeDocument);
         Utilities.checkParameterExistence(medicalData.numberDocument);
@@ -48,8 +50,8 @@ export class MedicalCenterController{
     }
 
     @Put(':id')
-    async update(@Param('id') id:string, @Body() medicalData: MedicalCenter): Promise<MedicalCenter>{
-        const medical: MedicalCenter = await this.medicalServices.findOne(id);
+    async update(@Param('id') id:string, @Body() medicalData: IPS): Promise<IPS>{
+        const medical: IPS = await this.medicalServices.findOne(id);
         medicalData.id = medical.id;        
         medicalData.name = medical.name;
         medicalData.typeDocument = medical.typeDocument;
@@ -61,8 +63,8 @@ export class MedicalCenterController{
     }
 
     @Delete(':id')
-    async delete(@Param('id') id:string): Promise<MedicalCenter>{
-        const medical: MedicalCenter = await this.medicalServices.findOne(id);
+    async delete(@Param('id') id:string): Promise<IPS>{
+        const medical: IPS = await this.medicalServices.findOne(id);
         medical.isActive = false;
         return this.medicalServices.save(medical);
     }

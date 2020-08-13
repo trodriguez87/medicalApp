@@ -16,37 +16,38 @@
   
 
 */
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
-import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
-import { IPS } from './IPS.entity';
-import { MedicalEntity } from './medicalEntity.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne} from 'typeorm';
+import { IsDefined, IsUUID, IsOptional, Length, IsBoolean } from 'class-validator';
+import { TypeDocument } from './typeDocument.entity';
 
 @Entity()
-export class TypeDocument{ 
-    
+export class MedicalEntity{ 
+
     @PrimaryGeneratedColumn("uuid")
     @IsUUID()
     @IsOptional()
     id: string;
-    
-    @Column({type: 'varchar', length: 10, unique: true, nullable:false})
+
+    @Column({type: 'varchar', length: 30, unique: true, nullable:false})
     @IsDefined()
-    @Length(0,10)
-    abbreviation: string;
-   
-    @Column({type: 'varchar', length: 35, unique: true, nullable:false})
-    @IsDefined()
-    @Length(0,35)    
+    @Length(0,30)
     name: string;
+ 
+    @Column ({type: 'varchar', length: 20, nullable: true})
+    @IsOptional()
+    @Length(0,20)
+    phone: string;
+    
+    @Column({type: 'varchar', length: 30, unique:true, nullable:false})
+    @IsDefined()
+    @Length(0,30)
+    numberDocument: string;
     
     @Column ({nullable: false})
     @IsDefined()
     @IsBoolean()
     isActive: boolean;
-
-    @OneToMany(() => IPS, (ips) => ips.typeDocument)
-    ips: IPS[];
-
-    @OneToMany(() => MedicalEntity, (medicalEntity) => medicalEntity.typeDocument)
-    medicalEntity: MedicalEntity[];
+    
+    @ManyToOne (() => TypeDocument, (typeDocument: TypeDocument) => typeDocument.medicalEntity)
+    typeDocument: TypeDocument;
 }

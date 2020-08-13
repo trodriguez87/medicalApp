@@ -18,29 +18,30 @@
 */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository} from 'typeorm';
-import { MedicalCenter } from '../entities/medicalCenter.entity';
+import { Repository } from 'typeorm';
+import { MedicalEntity } from '../entities/medicalEntity.entity';
+
 
 @Injectable()
-export class MedicalCenterService {
+export class MedicalEntityService {
 
-    constructor (@InjectRepository(MedicalCenter) private medicalRepository: Repository<MedicalCenter>){
-
+    constructor (@InjectRepository(MedicalEntity) 
+        private medicalEntityRepository: Repository<MedicalEntity>){
     }
 
-    async findAll(): Promise<MedicalCenter[]>{
-        return await this.medicalRepository.find({where: {isActive: true}});
+    async findAll(): Promise<MedicalEntity[]>{
+        return await this.medicalEntityRepository.find({where: {isActive: true}});
     }
 
-    async findOne(idCenter: string): Promise<MedicalCenter>{
-        const medical: MedicalCenter = await this.medicalRepository.findOne(idCenter)
-        if(!medical) {
-                throw new NotFoundException()
+    async findOne(idmedicalEntity: string): Promise<MedicalEntity>{
+        const medicalEntity: MedicalEntity = await this.medicalEntityRepository.findOne(idmedicalEntity);
+        if(!medicalEntity){
+            throw new NotFoundException();
         }
-        return medical;
+        return medicalEntity;
     }
 
-    async save(medical: MedicalCenter): Promise<MedicalCenter>{
-        return await this.medicalRepository.save(medical);
+    async save(medicalEntity: MedicalEntity): Promise<MedicalEntity>{
+        return await this.medicalEntityRepository.save(medicalEntity);
     }
 }

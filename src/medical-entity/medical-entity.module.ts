@@ -17,26 +17,19 @@
 
 */
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventModule } from './event/event.module';
-import { DiagnoseModule } from './diagnose/diagnose.module';
-import { IPSModule } from './IPS/IPS.module';
-import { DocumentModule } from './document/document.module';
-import { MedicalEntityModule } from './medical-entity/medical-entity.module';
+import { MedicalEntityController } from './medical-entity.controller';
+import { MedicalEntityService } from './medical-entity.service';
+import { MedicalEntity } from '../entities/medicalEntity.entity';
 
-const username = 'postgres';
-const password = '123';
+
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), 
-      EventModule, 
-      DiagnoseModule,
-      IPSModule,
-      DocumentModule,
-      MedicalEntityModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forFeature([MedicalEntity])
+  ],
+  controllers: [MedicalEntityController],
+  providers: [MedicalEntityService],  
+  exports: [MedicalEntityService]
 })
-export class AppModule {}
+export class MedicalEntityModule {}

@@ -17,12 +17,14 @@
 import {validate} from 'class-validator';
 import {Event} from '../../../src/entities/event.entity';
 import {plainToClass} from 'class-transformer';
-import { async } from 'rxjs/internal/scheduler/async';
+
 
 
 let event:Event;
 let event2:Event;
 beforeEach(() =>{
+
+    
     event  = plainToClass (Event,{
         "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "name": "PruebaEntidadMedica",

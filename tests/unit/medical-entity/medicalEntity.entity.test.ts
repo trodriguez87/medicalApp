@@ -15,11 +15,11 @@
     along with Foobar.  If not, see <https://www.gnu.org/licenses/>.  
 */
 import { validate } from 'class-validator';
-import { MedicalCenter } from '../../../src/entities/medicalCenter.entity';
 import { TypeDocument } from '../../../src/entities/typeDocument.entity';
+import { MedicalEntity } from '../../../src/entities/medicalEntity.entity';
 import { plainToClass } from 'class-transformer';
 
-let medical:MedicalCenter;
+let medical:MedicalEntity;
 
 beforeEach(() =>{
 
@@ -27,18 +27,17 @@ beforeEach(() =>{
     typeDoc.abbreviation = "RUT";
     typeDoc.name = "Registro único Tributario"; 
 
-    medical  = plainToClass (MedicalCenter,{
+    medical  = plainToClass (MedicalEntity,{
         "id": "38e73d77-7f5f-4128-9452-d344329c14c7",
         "name": "PruebaEntidadMedica",
         "numberDocument": "123456",
         "typeDocument": typeDoc,
-        "address": "Fundación",
         "phone": "2148863",
         "isActive": true
     });
 });
 
-it('Medical Center', async() => {
+it('Medical Entity', async() => {
     expect(await validate(medical)).toEqual([]);
 });
 
@@ -72,34 +71,19 @@ it('Field Name is null', async() =>{
     expect (Error[0]).toBe(undefined);
 });
 
-it('Field Address is empty', async() => {
-    medical.address = '';
-    expect(Error[0]).toBe(undefined);
-});
-
-it('Field Address is undefined', async() => {
-    medical.address = undefined;
-    expect(Error[0]).toBe(undefined);
-});
-
-it('Field Address is null', async() => {
-    medical.address = null;
-    expect(Error[0]).toBe(undefined);
-});
-
 it('Field Phone is empty', async() => {
     medical.phone = '';
-    expect(Error[0]).toBe(undefined);
+    expect(await validate(medical)).toEqual([]);
 });
 
 it('Field Phone is undefined', async() => {
     medical.phone = undefined;
-    expect(Error[0]).toBe(undefined);
+    expect(await validate(medical)).toEqual([]);
 });
 
 it('Field Phone is null', async() => {
     medical.phone = null;
-    expect(Error[0]).toBe(undefined);
+    expect(await validate(medical)).toEqual([]);
 });
 
 it('Field Type Document is undefined', async() => {
