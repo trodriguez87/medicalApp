@@ -30,11 +30,16 @@ export class MedicalEntityService {
     }
 
     async findAll(): Promise<MedicalEntity[]>{
-        return await this.medicalEntityRepository.find({where: {isActive: true}});
+        return await this.medicalEntityRepository.find({
+           where: {isActive: true},
+           relations:['typeDocument']
+        });
     }
 
     async findOne(idmedicalEntity: string): Promise<MedicalEntity>{
-        const medicalEntity: MedicalEntity = await this.medicalEntityRepository.findOne(idmedicalEntity);
+        const medicalEntity: MedicalEntity = await this.medicalEntityRepository.findOne(idmedicalEntity,{
+            relations:['typeDocument']
+        });
         if(!medicalEntity){
             throw new NotFoundException();
         }

@@ -20,7 +20,6 @@ import { Controller, Body, Param, Get, Delete,Post, Put, HttpException } from '@
 import { Utilities} from '../Utilities';
 import { IPSService } from './IPS.service';
 import { IPS } from '../entities/IPS.entity';
-import { DocumentService } from 'src/document/document.service';
 
 
 @Controller('ips')

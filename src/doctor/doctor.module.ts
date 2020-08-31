@@ -17,28 +17,17 @@
 
 */
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { DoctorController } from './doctor.controller';
+import { DoctorService } from './doctor.service';
+import { Doctor } from '../entities/doctor.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EventModule } from './event/event.module';
-import { DiagnoseModule } from './diagnose/diagnose.module';
-import { IPSModule } from './IPS/IPS.module';
-import { DocumentModule } from './document/document.module';
-import { MedicalEntityModule } from './medical-entity/medical-entity.module';
-import { DoctorModule } from './doctor/doctor.module';
-
-const username = 'postgres';
-const password = '123';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), 
-      EventModule, 
-      DiagnoseModule,
-      IPSModule,
-      DocumentModule,
-      MedicalEntityModule,
-      DoctorModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    TypeOrmModule.forFeature([Doctor])
+  ],
+  controllers: [DoctorController],
+  providers: [DoctorService],
+  exports: [DoctorService]
 })
-export class AppModule {}
+export class DoctorModule {}

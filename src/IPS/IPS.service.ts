@@ -24,18 +24,21 @@ import { IPS } from '../entities/IPS.entity';
 @Injectable()
 export class IPSService {
 
-    constructor (@InjectRepository(IPS) private medicalRepository: Repository<IPS>){
-
-    }
+    constructor (@InjectRepository(IPS) private medicalRepository: Repository<IPS>){}
 
     async findAll(): Promise<IPS[]>{
-        return await this.medicalRepository.find({where: {isActive: true}});
+        return await this.medicalRepository.find({
+            where: {isActive: true},
+            relations:['typeDocument']
+        });
     }
 
     async findOne(idCenter: string): Promise<IPS>{
-        const medical: IPS = await this.medicalRepository.findOne(idCenter)
+        const medical: IPS = await this.medicalRepository.findOne(idCenter,{
+            relations:['typeDocument']
+        })
         if(!medical) {
-                throw new NotFoundException()
+            throw new NotFoundException();
         }
         return medical;
     }

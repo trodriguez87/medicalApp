@@ -20,6 +20,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
 import { Length, IsOptional, IsUUID, IsDefined, IsBoolean} from 'class-validator';
 import { IPS } from './IPS.entity';
 import { MedicalEntity } from './medicalEntity.entity';
+import { Doctor } from './doctor.entity';
 
 @Entity()
 export class TypeDocument{ 
@@ -49,4 +50,7 @@ export class TypeDocument{
 
     @OneToMany(() => MedicalEntity, (medicalEntity) => medicalEntity.typeDocument)
     medicalEntity: MedicalEntity[];
+
+    @OneToMany(() => Doctor, (doctor) => doctor.typeDocument)
+    doctor: Doctor[];
 }
